@@ -4,7 +4,6 @@ import com.imooc.domain.Girl;
 import com.imooc.domain.Result;
 import com.imooc.repository.GirlRepository;
 import com.imooc.service.GirlService;
-import com.imooc.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static com.imooc.utils.ResultUtil.*;
 
 /**
  * Created by 廖师兄
@@ -47,13 +48,13 @@ public class GirlController {
     @PostMapping(value = "/girls")
     public Result<Girl> girlAdd(@Valid Girl girl, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
+            return error(1, bindingResult.getFieldError().getDefaultMessage());
         }
 
         girl.setCupSize(girl.getCupSize());
         girl.setAge(girl.getAge());
 
-        return ResultUtil.success(girlRepository.save(girl));
+        return success(girlRepository.save(girl));
     }
 
     //查询一个女生
